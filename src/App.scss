@@ -1,0 +1,281 @@
+.tldr-container {
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        margin: 20px;
+        user-select: none;
+
+        .header-left-icon {
+            position: absolute;
+            left: 0;
+            width: fit-content;
+
+            svg {
+                cursor: pointer;
+
+                &:hover {
+                    fill: rgba(244, 238, 224, 0.9);
+                }
+            }
+        }
+
+        .header-right-icon {
+            position: absolute;
+            right: 0;
+            width: fit-content;
+
+            svg {
+                cursor: pointer;
+
+                &:hover {
+                    fill: rgba(244, 238, 224, 0.9);
+                }
+            }
+        }
+
+        .header-title {
+            color: rgb(244, 238, 224);
+            font-size: 30px;
+            font-weight: 800;
+        }
+    }
+
+    .middle-container {
+        width: 60%;
+        margin: 30px auto;
+
+        .top-section {
+            .option-container {
+                justify-content: space-between;
+                display: flex;
+                user-select: none;
+
+                .option-btn {
+                    color: rgb(244, 238, 224);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 16px;
+                    width: 50%;
+                    height: 50px;
+                    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+                    cursor: pointer;
+
+                    &.left-btn {
+                        border-top-left-radius: 10px;
+                        border-bottom-left-radius: 10px;
+                    }
+
+                    &.right-btn {
+                        border-top-right-radius: 10px;
+                        border-bottom-right-radius: 10px;
+                    }
+
+                    &.active {
+                        background-color: rgb(244, 238, 224);
+                        color: rgb(57, 54, 70);
+                    }
+
+                    &:not(.active) {
+                        background-color: rgba(0, 0, 0, 0.5);
+                    }
+                }
+            }
+
+            .content-options {
+                .input-area {
+                    margin-top: 20px;
+                    display: flex;
+                    justify-content: center;
+
+                    input,
+                    textarea {
+                        width: 100%;
+                        padding: 10px 15px;
+                        border-radius: 10px;
+                        outline: none;
+                        border: none;
+                        box-shadow: inset 2px 2px 2px rgba(0, 0, 0, 0.2);
+                        font-size: 16px;
+                        background-color: rgb(244, 238, 224);
+                        color: rgb(57, 54, 70);
+
+                        &::selection {
+                            background-color: rgb(57, 54, 70);
+                            color: rgb(244, 238, 224);
+                        }
+                    }
+
+                    textarea {
+                        resize: none;
+
+                        &::-webkit-scrollbar {
+                            width: 4px;
+                        }
+
+                        &::-webkit-scrollbar-track {
+                            border-radius: 10px;
+                        }
+
+                        &::-webkit-scrollbar-thumb {
+                            background-color: rgb(57, 54, 70);
+                            border-radius: 10px;
+                            cursor: pointer;
+
+                            &:hover {
+                                background-color: rgba(57, 54, 70, 0.9);
+                            }
+                        }
+                    }
+                }
+            }
+
+            .config-container {
+                margin-top: 30px;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                user-select: none;
+                color: rgb(244, 238, 224);
+
+                .row-1 {
+                    display: flex;
+                    align-items: center;
+                    gap: 25px;
+
+                    select {
+                        background-color: rgb(244, 238, 224);
+                        border: none;
+                        border-radius: 10px;
+                        padding: 7px;
+                        outline: none;
+                        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+                        font-size: 16px;
+                        color: rgb(57, 54, 70);
+                        cursor: pointer;
+                    }
+                }
+
+                .row-2 {
+                    display: flex;
+                    gap: 20px;
+
+                    .config-item {
+                        label {
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+
+                            &.disabled {
+                                opacity: 0.5;
+                                cursor: not-allowed;
+                            }
+
+                            input[type="checkbox"] {
+                                appearance: none;
+                                width: 18px;
+                                height: 18px;
+                                border: 2px solid rgb(244, 238, 224);
+                                border-radius: 4px;
+                                display: inline-block;
+                                position: relative;
+                                margin: 0;
+                                box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+                                cursor: pointer;
+
+                                &:checked {
+                                    background-color: rgb(244, 238, 224);
+                                }
+
+                                &::before {
+                                    content: "✔";
+                                    font-size: 14px;
+                                    color: rgb(57, 54, 70);
+                                    position: absolute;
+                                    top: 50%;
+                                    left: 50%;
+                                    transform: translate(-50%, -50%) scale(0);
+                                    transition: 0.2s ease-in-out;
+                                }
+
+                                &:checked::before {
+                                    transform: translate(-50%, -50%) scale(1);
+                                }
+
+                                &:disabled {
+                                    cursor: not-allowed;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .bottom-section {
+            background-color: rgb(244, 238, 224);
+            margin-top: 30px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            color: rgb(57, 54, 70);
+            height: 50vh;
+            overflow-y: scroll;
+
+            ::selection {
+                background-color: rgb(57, 54, 70);
+                color: rgb(244, 238, 224);
+            }
+
+            &::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            &::-webkit-scrollbar-track {
+                border-radius: 10px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: rgb(57, 54, 70);
+                border-radius: 10px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: rgba(57, 54, 70, 0.9);
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1350px) {
+    .tldr-container {
+        .middle-container {
+            width: 80%;
+        }
+    }
+}
+
+@media screen and (max-width: 1050px) {
+    .tldr-container {
+        .middle-container {
+            width: 90%;
+        }
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .tldr-container {
+        .middle-container {
+            .top-section {
+                .config-container {
+                    .row-2 {
+                        flex-direction: column;
+                    }
+                }
+            }
+        }
+    }
+}
