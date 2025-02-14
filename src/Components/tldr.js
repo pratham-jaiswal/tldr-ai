@@ -2,17 +2,75 @@ import { useState } from "react";
 import Markdown from "react-markdown";
 import { Link } from "react-router-dom";
 import remarkGfm from "remark-gfm";
+import axios from "axios";
 
 export default function TLDR() {
   const [activeBtn, setActiveBtn] = useState("URL");
+  const [urlInput, setUrlInput] = useState("");
+  const [textAreaInput, setTextAreaInput] = useState("");
+  const [selectedProvider, setSelectedProvider] =
+    useState("OpenAI GPT-4o mini");
   const [useSave, setUseSave] = useState(true);
   const [useKnowledgeHub, setUseKnowledgeHub] = useState(true);
+  const [markdownContent, setMarkdownContent] = useState("");
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const urlInputPlaceholder = "https://en.wikipedia.org/wiki/TL;DR";
   const textAreaPlaceholder =
     'TL;DR or tl;dr, short for "too long; didn\'t read", is internet slang often used to introduce a summary of an online post or news article. It is also used as an informal interjection commenting that a block of text has been ignored due to its length.';
 
-  const markdown = "";
+  const generateTLDRForURL = async () => {
+    setMarkdownContent("");
+    setIsLoading(true);
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/tldr/url`,
+        {
+          url: urlInput,
+          provider: selectedProvider,
+          shouldSave: useSave,
+          useKnowledgeHub: useKnowledgeHub,
+        },
+        {
+          headers: {
+            "x-api-key": process.env.REACT_APP_API_KEY,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setMarkdownContent(response.data.tldr);
+    } catch (error) {
+      console.error("Error generating TL;DR:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const generateTLDRForText = async () => {
+    setMarkdownContent("");
+    setIsLoading(true);
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/tldr/text`,
+        {
+          content: textAreaInput,
+          provider: selectedProvider,
+        },
+        {
+          headers: {
+            "x-api-key": process.env.REACT_APP_API_KEY,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setMarkdownContent(response.data.tldr);
+    } catch (error) {
+      console.error("Error generating TL;DR:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="tldr-container">
@@ -30,9 +88,9 @@ export default function TLDR() {
             </svg>
           </Link>
         </div>
-        <div className="header-title">TL;DR</div>
+        <h2 className="header-title">TL;DR AI</h2>
         <div className="header-right-icon">
-          <Link to="/kh">
+          <Link to="/saved-tldrs">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="24px"
@@ -52,7 +110,7 @@ export default function TLDR() {
               className={`option-btn left-btn ${
                 activeBtn === "URL" ? "active" : ""
               }`}
-              onClick={() => setActiveBtn("URL")}
+              onClick={() => !isLoading && setActiveBtn("URL")}
             >
               URL
             </div>
@@ -60,7 +118,7 @@ export default function TLDR() {
               className={`option-btn right-btn ${
                 activeBtn === "Text" ? "active" : ""
               }`}
-              onClick={() => setActiveBtn("Text")}
+              onClick={() => !isLoading && setActiveBtn("Text")}
             >
               Text
             </div>
@@ -68,13 +126,21 @@ export default function TLDR() {
           <div className="content-options">
             {activeBtn === "URL" ? (
               <div className="input-area">
-                <input type="url" placeholder={urlInputPlaceholder} autoFocus />
+                <input
+                  type="url"
+                  placeholder={urlInputPlaceholder}
+                  onChange={(e) => setUrlInput(e.target.value)}
+                  disabled={isLoading}
+                  autoFocus
+                />
               </div>
             ) : (
               <div className="input-area">
                 <textarea
                   rows="10"
                   placeholder={textAreaPlaceholder}
+                  onChange={(e) => setTextAreaInput(e.target.value)}
+                  disabled={isLoading}
                   autoFocus
                 ></textarea>
               </div>
@@ -83,9 +149,14 @@ export default function TLDR() {
           <div className="config-container">
             <div className="config-item row-1">
               <span>Provider: </span>
-              <select name="provider" defaultValue="openai">
-                <option value="openai">OpenAI GPT-4o mini</option>
-                <option value="cohere">Cohere Command R</option>
+              <select
+                name="provider"
+                defaultValue="OpenAI GPT-4o mini"
+                onChange={(e) => setSelectedProvider(e.target.value)}
+                disabled={isLoading}
+              >
+                <option value="OpenAI GPT-4o mini">OpenAI GPT-4o mini</option>
+                <option value="Cohere Command R">Cohere Command R</option>
               </select>
             </div>
             <div className="row-2">
@@ -99,7 +170,7 @@ export default function TLDR() {
                     name="save"
                     checked={useSave && activeBtn === "URL"}
                     onChange={() => setUseSave(!useSave)}
-                    disabled={activeBtn !== "URL"}
+                    disabled={activeBtn !== "URL" || isLoading}
                   />
                   Save TLDR
                 </label>
@@ -114,16 +185,30 @@ export default function TLDR() {
                     name="useKnowledgeHub"
                     checked={useKnowledgeHub && activeBtn === "URL"}
                     onChange={() => setUseKnowledgeHub(!useKnowledgeHub)}
-                    disabled={activeBtn !== "URL"}
+                    disabled={activeBtn !== "URL" || isLoading}
                   />
                   Use Saved TLDR (If Any)
                 </label>
               </div>
             </div>
+            <div className="row-3">
+              <button
+                className="btn primary"
+                onClick={
+                  activeBtn === "URL" ? generateTLDRForURL : generateTLDRForText
+                }
+                disabled={
+                  (activeBtn === "URL" ? !urlInput : !textAreaInput) ||
+                  isLoading
+                }
+              >
+                {isLoading ? "Generating..." : "Generate TL;DR"}
+              </button>
+            </div>
           </div>
         </div>
         <div className="bottom-section">
-          <Markdown remarkPlugins={[remarkGfm]}>{markdown}</Markdown>
+          <Markdown remarkPlugins={[remarkGfm]}>{markdownContent}</Markdown>
         </div>
       </div>
     </div>
