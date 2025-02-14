@@ -44,7 +44,7 @@ export default function TLDR() {
     } catch (error) {
       console.error("Error generating TL;DR:", error);
       if (error.response.status === 429) {
-        alert("Rate limit exceeded. Please try again later.");
+        alert("Rate limit exceeded. Please try again after 6 hours.");
       }
       else {
         alert("An error occurred. Please try again.");
@@ -76,7 +76,7 @@ export default function TLDR() {
     } catch (error) {
       console.error("Error generating TL;DR:", error);
       if (error.response.status === 429) {
-        alert("Rate limit exceeded. Please try again later.");
+        alert("Rate limit exceeded. Please try again after 6 hours.");
       }
       else {
         alert("An error occurred. Please try again.");

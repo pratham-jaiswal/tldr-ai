@@ -32,7 +32,7 @@ export default function About() {
       title: "Rate Limits",
       content: "",
       list: [
-        "Users are limited to 2 AI-generated TL;DRs per session.",
+        "Users are limited to 2 AI-generated TL;DRs per 6 hours.",
         "Fetching a previously saved summary does not count towards this limit.",
       ],
     },
