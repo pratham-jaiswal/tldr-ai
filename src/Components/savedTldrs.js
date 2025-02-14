@@ -23,6 +23,11 @@ export default function SavedTLDRs() {
       .then((response) => {
         setSavedSummaries(response.data.savedTLDRs);
         setFilteredSummaries(response.data.savedTLDRs);
+      })
+      .catch((error) => {
+        console.error("Error fetching saved TL;DRs:", error);
+
+        alert("An error occurred. Please try again.");
       });
   }, []);
 

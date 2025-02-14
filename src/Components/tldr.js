@@ -43,6 +43,12 @@ export default function TLDR() {
       setMarkdownContent(response.data.tldr);
     } catch (error) {
       console.error("Error generating TL;DR:", error);
+      if (error.response.status === 429) {
+        alert("Rate limit exceeded. Please try again later.");
+      }
+      else {
+        alert("An error occurred. Please try again.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -69,6 +75,12 @@ export default function TLDR() {
       setMarkdownContent(response.data.tldr);
     } catch (error) {
       console.error("Error generating TL;DR:", error);
+      if (error.response.status === 429) {
+        alert("Rate limit exceeded. Please try again later.");
+      }
+      else {
+        alert("An error occurred. Please try again.");
+      }
     } finally {
       setIsLoading(false);
     }
