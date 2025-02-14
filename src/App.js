@@ -9,8 +9,23 @@ import Home from "./Components/home";
 import TLDR from "./Components/tldr";
 import SavedTLDRs from "./Components/savedTldrs";
 import About from "./Components/about";
+import Cookies from "js-cookie";
+import { v4 as uuidv4 } from "uuid";
+import { useEffect } from "react";
 
 function App() {
+  useEffect(() => {
+    if (!Cookies.get("user_id")) {
+      const userId = uuidv4();
+      Cookies.set("user_id", userId, {
+        expires: 1,
+        secure: true,
+        sameSite: "None",
+      });
+      console.log("User ID set:", userId);
+    }
+  }, []);
+
   return (
     <div className="App">
       <Router>

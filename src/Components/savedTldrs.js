@@ -18,6 +18,7 @@ export default function SavedTLDRs() {
           "x-api-key": process.env.REACT_APP_API_KEY,
           "Content-Type": "application/json",
         },
+        withCredentials: true,
       })
       .then((response) => {
         setSavedSummaries(response.data.savedTLDRs);

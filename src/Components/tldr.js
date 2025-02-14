@@ -37,7 +37,8 @@ export default function TLDR() {
             "x-api-key": process.env.REACT_APP_API_KEY,
             "Content-Type": "application/json",
           },
-        }
+          withCredentials: true,
+        },
       );
       setMarkdownContent(response.data.tldr);
     } catch (error) {
@@ -62,6 +63,7 @@ export default function TLDR() {
             "x-api-key": process.env.REACT_APP_API_KEY,
             "Content-Type": "application/json",
           },
+          withCredentials: true,
         }
       );
       setMarkdownContent(response.data.tldr);
