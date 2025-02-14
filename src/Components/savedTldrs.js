@@ -83,9 +83,7 @@ export default function SavedTLDRs() {
         />
       </div>
       <div className="main-container">
-        {currentSummaries.length === 0 ? (
-          <p>No saved summaries found.</p>
-        ) : (
+        {currentSummaries.length !== 0 && (
           <ul className="saved-list">
             {currentSummaries.map((item, index) => (
               <li key={index} className="saved-item">
