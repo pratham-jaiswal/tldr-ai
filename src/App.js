@@ -18,11 +18,10 @@ function App() {
     if (!Cookies.get("user_id")) {
       const userId = uuidv4();
       Cookies.set("user_id", userId, {
-        expires: 1,
+        expires: 6,
         secure: true,
         sameSite: "None",
       });
-      console.log("User ID set:", userId);
     }
   }, []);
 
