@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Markdown from "react-markdown";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast, Bounce } from "react-toastify";
 import remarkGfm from "remark-gfm";
 import axios from "axios";
 
@@ -27,7 +28,17 @@ export default function SavedTLDRs() {
       .catch((error) => {
         console.error("Error fetching saved TL;DRs:", error);
 
-        alert("An error occurred. Please try again.");
+        toast.error("An error occurred. Please try again.", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Bounce,
+          });
       });
   }, []);
 
@@ -133,6 +144,7 @@ export default function SavedTLDRs() {
           </div>
         </div>
       )}
+      <ToastContainer />
     </div>
   );
 }
