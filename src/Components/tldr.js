@@ -24,17 +24,20 @@ export default function TLDR() {
 
   const generateTLDRForURL = async () => {
     if (!urlInput || !validator.isURL(urlInput, { require_protocol: true })) {
-      toast.error("❌ Please enter a valid URL (including http:// or https://)", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Bounce,
-      });
+      toast.error(
+        "❌ Please enter a valid URL (including http:// or https://)",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Bounce,
+        }
+      );
       return;
     }
 
@@ -67,7 +70,7 @@ export default function TLDR() {
       tldrPromise,
       {
         pending: "Generating TL;DR...",
-        success: "TL;DR generated successfully 👌",
+        success: "🎉 TL;DR generated successfully!",
       },
       {
         position: "top-right",
@@ -85,9 +88,62 @@ export default function TLDR() {
     try {
       await tldrPromise;
     } catch (error) {
-      console.error("Error generating TL;DR:", error);
-      if (error.response?.status === 429) {
-        toast.error("⏰ Rate limit exceeded. Try again after 6 hours. ", {
+      if (error.response) {
+        switch (error.response.status) {
+          case 400:
+            toast.error("⚠️ Invalid URL or URL is unreachable!", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              transition: Bounce,
+            });
+            break;
+          case 429:
+            toast.error("⏰ Rate limit exceeded. Try again after 6 hours.", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              transition: Bounce,
+            });
+            break;
+          case 500:
+            toast.error("🛑 Server error. Please try again later.", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              transition: Bounce,
+            });
+            break;
+          default:
+            toast.error("😕 Unexpected error. Please try again.", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              transition: Bounce,
+            });
+        }
+      } else if (error.request) {
+        toast.error("🚫 Network error. Please check your connection.", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -99,7 +155,7 @@ export default function TLDR() {
           transition: Bounce,
         });
       } else {
-        toast.error("Failed to generate TL;DR 🤯", {
+        toast.error("🤔 An unknown error occurred. Please try again.", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -144,7 +200,7 @@ export default function TLDR() {
       tldrPromise,
       {
         pending: "Generating TL;DR...",
-        success: "TL;DR generated successfully 👌",
+        success: "🎉 TL;DR generated successfully!",
       },
       {
         position: "top-right",
@@ -162,9 +218,62 @@ export default function TLDR() {
     try {
       await tldrPromise;
     } catch (error) {
-      console.error("Error generating TL;DR:", error);
-      if (error.response?.status === 429) {
-        toast.error("⏰ Rate limit exceeded. Try again after 6 hours. ", {
+      if (error.response) {
+        switch (error.response.status) {
+          case 400:
+            toast.error("⚠️ Missing text content or provider!", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              transition: Bounce,
+            });
+            break;
+          case 429:
+            toast.error("⏰ Rate limit exceeded. Try again after 6 hours.", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              transition: Bounce,
+            });
+            break;
+          case 500:
+            toast.error("🛑 Server error. Please try again later.", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              transition: Bounce,
+            });
+            break;
+          default:
+            toast.error("😕 Unexpected error. Please try again.", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              transition: Bounce,
+            });
+        }
+      } else if (error.request) {
+        toast.error("🚫 Network error. Please check your connection.", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -176,7 +285,7 @@ export default function TLDR() {
           transition: Bounce,
         });
       } else {
-        toast.error("Failed to generate TL;DR 🤯", {
+        toast.error("🤔 An unknown error occurred. Please try again.", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
