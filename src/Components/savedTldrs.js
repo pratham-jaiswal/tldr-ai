@@ -26,8 +26,6 @@ export default function SavedTLDRs() {
         setFilteredSummaries(response.data.savedTLDRs);
       })
       .catch((error) => {
-        console.error("Error fetching saved TL;DRs:", error);
-
         toast.error("An error occurred. Please try again.", {
           position: "top-right",
           autoClose: 3000,
@@ -68,6 +66,10 @@ export default function SavedTLDRs() {
     setFilteredSummaries(filtered);
     setCurrentPage(1);
   }, [searchTerm, savedSummaries]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentPage]);
 
   const indexOfLastSummary = currentPage * summariesPerPage;
   const indexOfFirstSummary = indexOfLastSummary - summariesPerPage;

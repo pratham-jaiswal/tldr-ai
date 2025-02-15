@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import PrivacyPolicy from "./privacyPolicy";
 import TermsConditions from "./termsConditions";
 import Footer from "./Components/footer";
+import ScrollToTop from "./Components/scrollToTop";
 
 function App() {
   useEffect(() => {
@@ -31,6 +32,7 @@ function App() {
   return (
     <div className="App">
       <Router>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/tldr" element={<TLDR />} />
