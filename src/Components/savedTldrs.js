@@ -13,7 +13,7 @@ export default function SavedTLDRs() {
   const summariesPerPage = 5;
 
   useEffect(() => {
-    axios
+    const fetchSavedTLDRsPromise = axios
       .get(`${process.env.REACT_APP_API_URL}/fetch-saved-tldrs`, {
         headers: {
           "x-api-key": process.env.REACT_APP_API_KEY,
@@ -30,7 +30,7 @@ export default function SavedTLDRs() {
 
         toast.error("An error occurred. Please try again.", {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: false,
           pauseOnHover: false,
@@ -38,8 +38,27 @@ export default function SavedTLDRs() {
           progress: undefined,
           theme: "dark",
           transition: Bounce,
-          });
+        });
       });
+
+    toast.promise(
+      fetchSavedTLDRsPromise,
+      {
+        pending: "Fetching Saved TL;DRs...",
+        success: "👌 TL;DRs fetched successfully!",
+      },
+      {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      }
+    );
   }, []);
 
   useEffect(() => {
