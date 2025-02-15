@@ -28,7 +28,7 @@ export default function TLDR() {
         "❌ Please enter a valid URL (including http:// or https://)",
         {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: false,
           pauseOnHover: false,
@@ -74,7 +74,7 @@ export default function TLDR() {
       },
       {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: false,
         pauseOnHover: false,
@@ -93,7 +93,7 @@ export default function TLDR() {
           case 400:
             toast.error("⚠️ Invalid URL or URL is unreachable!", {
               position: "top-right",
-              autoClose: 5000,
+              autoClose: 3000,
               hideProgressBar: false,
               closeOnClick: false,
               pauseOnHover: false,
@@ -106,7 +106,7 @@ export default function TLDR() {
           case 429:
             toast.error("⏰ Rate limit exceeded. Try again after 6 hours.", {
               position: "top-right",
-              autoClose: 5000,
+              autoClose: 3000,
               hideProgressBar: false,
               closeOnClick: false,
               pauseOnHover: false,
@@ -119,7 +119,7 @@ export default function TLDR() {
           case 500:
             toast.error("🛑 Server error. Please try again later.", {
               position: "top-right",
-              autoClose: 5000,
+              autoClose: 3000,
               hideProgressBar: false,
               closeOnClick: false,
               pauseOnHover: false,
@@ -132,7 +132,7 @@ export default function TLDR() {
           default:
             toast.error("😕 Unexpected error. Please try again.", {
               position: "top-right",
-              autoClose: 5000,
+              autoClose: 3000,
               hideProgressBar: false,
               closeOnClick: false,
               pauseOnHover: false,
@@ -145,7 +145,7 @@ export default function TLDR() {
       } else if (error.request) {
         toast.error("🚫 Network error. Please check your connection.", {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: false,
           pauseOnHover: false,
@@ -157,7 +157,7 @@ export default function TLDR() {
       } else {
         toast.error("🤔 An unknown error occurred. Please try again.", {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: false,
           pauseOnHover: false,
@@ -204,7 +204,7 @@ export default function TLDR() {
       },
       {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: false,
         pauseOnHover: false,
@@ -223,7 +223,7 @@ export default function TLDR() {
           case 400:
             toast.error("⚠️ Missing text content or provider!", {
               position: "top-right",
-              autoClose: 5000,
+              autoClose: 3000,
               hideProgressBar: false,
               closeOnClick: false,
               pauseOnHover: false,
@@ -236,7 +236,7 @@ export default function TLDR() {
           case 429:
             toast.error("⏰ Rate limit exceeded. Try again after 6 hours.", {
               position: "top-right",
-              autoClose: 5000,
+              autoClose: 3000,
               hideProgressBar: false,
               closeOnClick: false,
               pauseOnHover: false,
@@ -249,7 +249,7 @@ export default function TLDR() {
           case 500:
             toast.error("🛑 Server error. Please try again later.", {
               position: "top-right",
-              autoClose: 5000,
+              autoClose: 3000,
               hideProgressBar: false,
               closeOnClick: false,
               pauseOnHover: false,
@@ -262,7 +262,7 @@ export default function TLDR() {
           default:
             toast.error("😕 Unexpected error. Please try again.", {
               position: "top-right",
-              autoClose: 5000,
+              autoClose: 3000,
               hideProgressBar: false,
               closeOnClick: false,
               pauseOnHover: false,
@@ -275,7 +275,7 @@ export default function TLDR() {
       } else if (error.request) {
         toast.error("🚫 Network error. Please check your connection.", {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: false,
           pauseOnHover: false,
@@ -287,7 +287,7 @@ export default function TLDR() {
       } else {
         toast.error("🤔 An unknown error occurred. Please try again.", {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: false,
           pauseOnHover: false,
