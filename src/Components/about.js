@@ -84,11 +84,6 @@ export default function About() {
           </div>
         ))}
       </section>
-      <footer className="about-footer">
-        <Link to="/tldr" className="btn back-btn">
-          Try TL;DR AI
-        </Link>
-      </footer>
     </div>
   );
 }
