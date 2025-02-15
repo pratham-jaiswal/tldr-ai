@@ -1,8 +1,10 @@
 import { useState } from "react";
 import Markdown from "react-markdown";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast, Bounce } from "react-toastify";
 import remarkGfm from "remark-gfm";
 import axios from "axios";
+import validator from "validator";
 
 export default function TLDR() {
   const [activeBtn, setActiveBtn] = useState("URL");
@@ -21,10 +23,26 @@ export default function TLDR() {
     'TL;DR or tl;dr, short for "too long; didn\'t read", is internet slang often used to introduce a summary of an online post or news article. It is also used as an informal interjection commenting that a block of text has been ignored due to its length.';
 
   const generateTLDRForURL = async () => {
+    if (!urlInput || !validator.isURL(urlInput, { require_protocol: true })) {
+      toast.error("❌ Please enter a valid URL (including http:// or https://)", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
+      return;
+    }
+
     setMarkdownContent("");
     setIsLoading(true);
-    try {
-      const response = await axios.post(
+
+    const tldrPromise = axios
+      .post(
         `${process.env.REACT_APP_API_URL}/tldr/url`,
         {
           url: urlInput,
@@ -38,16 +56,60 @@ export default function TLDR() {
             "Content-Type": "application/json",
           },
           withCredentials: true,
-        },
-      );
-      setMarkdownContent(response.data.tldr);
+        }
+      )
+      .then((response) => {
+        setMarkdownContent(response.data.tldr);
+        return response;
+      });
+
+    toast.promise(
+      tldrPromise,
+      {
+        pending: "Generating TL;DR...",
+        success: "TL;DR generated successfully 👌",
+      },
+      {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      }
+    );
+
+    try {
+      await tldrPromise;
     } catch (error) {
       console.error("Error generating TL;DR:", error);
-      if (error.response.status === 429) {
-        alert("Rate limit exceeded. Please try again after 6 hours.");
-      }
-      else {
-        alert("An error occurred. Please try again.");
+      if (error.response?.status === 429) {
+        toast.error("⏰ Rate limit exceeded. Try again after 6 hours. ", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Bounce,
+        });
+      } else {
+        toast.error("Failed to generate TL;DR 🤯", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Bounce,
+        });
       }
     } finally {
       setIsLoading(false);
@@ -57,8 +119,9 @@ export default function TLDR() {
   const generateTLDRForText = async () => {
     setMarkdownContent("");
     setIsLoading(true);
-    try {
-      const response = await axios.post(
+
+    const tldrPromise = axios
+      .post(
         `${process.env.REACT_APP_API_URL}/tldr/text`,
         {
           content: textAreaInput,
@@ -71,15 +134,59 @@ export default function TLDR() {
           },
           withCredentials: true,
         }
-      );
-      setMarkdownContent(response.data.tldr);
+      )
+      .then((response) => {
+        setMarkdownContent(response.data.tldr);
+        return response;
+      });
+
+    toast.promise(
+      tldrPromise,
+      {
+        pending: "Generating TL;DR...",
+        success: "TL;DR generated successfully 👌",
+      },
+      {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      }
+    );
+
+    try {
+      await tldrPromise;
     } catch (error) {
       console.error("Error generating TL;DR:", error);
-      if (error.response.status === 429) {
-        alert("Rate limit exceeded. Please try again after 6 hours.");
-      }
-      else {
-        alert("An error occurred. Please try again.");
+      if (error.response?.status === 429) {
+        toast.error("⏰ Rate limit exceeded. Try again after 6 hours. ", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Bounce,
+        });
+      } else {
+        toast.error("Failed to generate TL;DR 🤯", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Bounce,
+        });
       }
     } finally {
       setIsLoading(false);
@@ -216,7 +323,7 @@ export default function TLDR() {
                   isLoading
                 }
               >
-                {isLoading ? "Generating..." : "Generate TL;DR"}
+                Generate TL;DR
               </button>
             </div>
           </div>
@@ -225,6 +332,7 @@ export default function TLDR() {
           <Markdown remarkPlugins={[remarkGfm]}>{markdownContent}</Markdown>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }
