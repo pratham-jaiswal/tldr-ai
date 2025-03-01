@@ -393,7 +393,7 @@ export default function TLDR() {
               <div className="config-item">
                 <label
                   className={activeBtn !== "URL" ? "disabled" : ""}
-                  title="Save the TLDR and URL to the database"
+                  title="Save the TLDR and URL to our database"
                 >
                   <input
                     type="checkbox"
@@ -408,7 +408,7 @@ export default function TLDR() {
               <div className="config-item">
                 <label
                   className={activeBtn !== "URL" ? "disabled" : ""}
-                  title="Retrieve TLDR from the database if available"
+                  title="Retrieve TLDR from our database if available"
                 >
                   <input
                     type="checkbox"
