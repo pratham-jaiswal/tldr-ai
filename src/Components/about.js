@@ -21,11 +21,11 @@ export default function About() {
       list: ["OpenAI GPT-4o mini", "Cohere Command R"],
     },
     {
-      title: "Database Features",
+      title: "Saved Summaries",
       content: "",
       list: [
         "Users can save generated TL;DRs when using the URL option.",
-        "Users can opt to fetch a saved summary, which is retrieved if available in the database.",
+        "Users can opt to fetch a saved summary, which is retrieved if available in our database.",
       ],
     },
     {
