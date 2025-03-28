@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -66,7 +67,7 @@ export default function Footer() {
         </div>
 
         <p className="footer-text">
-          © {new Date().getFullYear()} TL;DR AI. All Rights Reserved.
+          © {currentYear > 2025 ? "2025-" + currentYear : currentYear} TL;DR AI. Made with ❤️.
         </p>
       </div>
     </footer>
