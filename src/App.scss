@@ -1,3 +1,33 @@
+.App {
+    #floating-patreon-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #f4eee0;
+        color: white;
+        padding: 10px;
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        border-radius: 100%;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        z-index: 9999;
+        transition: background-color 0.3s ease;
+    
+        :hover, :focus {
+            background-color: #e03e47;
+            outline: none;
+        }
+
+        span {
+            user-select: none;
+        }
+
+    }
+}
+
 .tldr-container {
     .header {
         display: flex;
