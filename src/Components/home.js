@@ -1,6 +1,20 @@
-import { Link } from "react-router-dom";
+import { useAuth } from "@clerk/clerk-react";
+import { Link, useNavigate } from "react-router-dom";
 
-export default function Home() {
+export default function Home({ signInButtonRef }) {
+  const { isSignedIn } = useAuth();
+  const navigate = useNavigate();
+
+  const handleGetStarted = () => {
+    if (isSignedIn) {
+      navigate("/tldr");
+    } else {
+      if (signInButtonRef.current) {
+        signInButtonRef.current.click();
+      }
+    }
+  };
+
   return (
     <div className="landing-container">
       <header className="landing-header">
@@ -15,9 +29,9 @@ export default function Home() {
             Let AI summarize it for you in seconds.
           </p>
           <div className="cta-buttons">
-            <Link to="/tldr" className="btn primary">
+            <button onClick={handleGetStarted} className="btn primary">
               Get Started
-            </Link>
+            </button>
             <Link to="/about" className="btn secondary">
               Learn More
             </Link>

@@ -9,25 +9,48 @@ import Home from "./Components/home";
 import TLDR from "./Components/tldr";
 import SavedTLDRs from "./Components/savedTldrs";
 import About from "./Components/about";
-import Cookies from "js-cookie";
-import { v4 as uuidv4 } from "uuid";
-import { useEffect } from "react";
 import PrivacyPolicy from "./privacyPolicy";
 import TermsConditions from "./termsConditions";
 import Footer from "./Components/footer";
 import ScrollToTop from "./Components/scrollToTop";
+import {
+  Protect,
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignOutButton,
+  SignUpButton,
+  useAuth,
+} from "@clerk/clerk-react";
+import { useRef } from "react";
 
 function App() {
-  useEffect(() => {
-    if (!Cookies.get("user_id")) {
-      const userId = uuidv4();
-      Cookies.set("user_id", userId, {
-        expires: 6,
-        secure: true,
-        sameSite: "None",
-      });
+  const { isSignedIn, isLoaded } = useAuth();
+  const signInButtonRef = useRef(null);
+  const signUpButtonRef = useRef(null);
+  const signOutButtonRef = useRef(null);
+
+  if (!isLoaded) {
+    return <div>Loading...</div>;
+  }
+
+  const handleSignIn = () => {
+    if (signInButtonRef.current && !isSignedIn) {
+      signInButtonRef.current.click();
     }
-  }, []);
+  };
+
+  const handleSignUp = () => {
+    if (signUpButtonRef.current && !isSignedIn) {
+      signUpButtonRef.current.click();
+    }
+  };
+
+  const handleSignOut = () => {
+    if (signOutButtonRef.current && isSignedIn) {
+      signOutButtonRef.current.click();
+    }
+  };
 
   return (
     <div className="App">
@@ -39,13 +62,55 @@ function App() {
         data-patreon-widget-type="become-patron-button"
         area-label="Become a Patron on Patreon"
       >
-        <img width={20} src="https://res.cloudinary.com/dhzmockpa/image/upload/v1745674680/PATREON_SYMBOL_1_BLACK_RGB_trsdty.svg" alt="Become a Patron on Patreon" />
+        <img
+          width={20}
+          src="https://res.cloudinary.com/dhzmockpa/image/upload/v1745674680/PATREON_SYMBOL_1_BLACK_RGB_trsdty.svg"
+          alt="Become a Patron on Patreon"
+        />
       </a>
+      <div style={{ display: "none" }}>
+        <SignInButton
+          mode="modal"
+          ref={signInButtonRef}
+          forceRedirectUrl={"/tldr"}
+          signUpFallbackRedirectUrl={"/tldr"}
+          signUpForceRedirectUrl={"/tldr"}
+        />
+        <SignUpButton
+          mode="modal"
+          ref={signUpButtonRef}
+          forceRedirectUrl={"/tldr"}
+          signUpFallbackRedirectUrl={"/tldr"}
+          signUpForceRedirectUrl={"/tldr"}
+        />
+        <SignOutButton ref={signOutButtonRef} />
+      </div>
+      <div className="nav-header">
+        <SignedOut>
+          <button onClick={handleSignIn}>Sign In</button>
+          <button onClick={handleSignUp}>Sign Up</button>
+        </SignedOut>
+        <SignedIn>
+          <button onClick={handleSignOut}>Sign Out</button>
+        </SignedIn>
+      </div>
       <Router>
         <ScrollToTop />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/tldr" element={<TLDR />} />
+          <Route
+            path="/"
+            element={<Home signInButtonRef={signInButtonRef} />}
+          />
+          {isSignedIn && (
+            <Route
+              path="/tldr"
+              element={
+                <Protect>
+                  <TLDR />
+                </Protect>
+              }
+            />
+          )}
           <Route path="/about" element={<About />} />
           <Route path="/saved-tldrs" element={<SavedTLDRs />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />

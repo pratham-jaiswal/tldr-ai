@@ -1,22 +1,28 @@
 import { useState } from "react";
 import Markdown from "react-markdown";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import remarkGfm from "remark-gfm";
 import axios from "axios";
 import validator from "validator";
+import { useAuth } from "@clerk/clerk-react";
 
 export default function TLDR() {
+  const { getToken, isSignedIn } = useAuth();
+
   const [activeBtn, setActiveBtn] = useState("URL");
   const [urlInput, setUrlInput] = useState("");
   const [textAreaInput, setTextAreaInput] = useState("");
-  const [selectedProvider, setSelectedProvider] =
-    useState("OpenAI GPT-4o mini");
+  const [selectedModel, setSelectedModel] = useState("gpt-4o-mini");
   const [useSave, setUseSave] = useState(true);
   const [useKnowledgeHub, setUseKnowledgeHub] = useState(true);
   const [markdownContent, setMarkdownContent] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
+
+  if (!isSignedIn) {
+    return <Navigate to="/" />;
+  }
 
   const urlInputPlaceholder = "https://en.wikipedia.org/wiki/TL;DR";
   const textAreaPlaceholder =
@@ -44,18 +50,20 @@ export default function TLDR() {
     setMarkdownContent("");
     setIsLoading(true);
 
+    const token = await getToken();
+
     const tldrPromise = axios
       .post(
         `${process.env.REACT_APP_API_URL}/tldr/url`,
         {
           url: urlInput,
-          provider: selectedProvider,
+          model: selectedModel,
           shouldSave: useSave,
           useKnowledgeHub: useKnowledgeHub,
         },
         {
           headers: {
-            "x-api-key": process.env.REACT_APP_API_KEY,
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
           withCredentials: true,
@@ -92,6 +100,19 @@ export default function TLDR() {
         switch (error.response.status) {
           case 400:
             toast.error("⚠️ Invalid URL or URL is unreachable!", {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              transition: Bounce,
+            });
+            break;
+          case 401:
+            toast.error("🚫 Unauthorized. Please log in.", {
               position: "top-right",
               autoClose: 3000,
               hideProgressBar: false,
@@ -176,16 +197,18 @@ export default function TLDR() {
     setMarkdownContent("");
     setIsLoading(true);
 
+    const token = await getToken();
+
     const tldrPromise = axios
       .post(
         `${process.env.REACT_APP_API_URL}/tldr/text`,
         {
           content: textAreaInput,
-          provider: selectedProvider,
+          model: selectedModel,
         },
         {
           headers: {
-            "x-api-key": process.env.REACT_APP_API_KEY,
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
           withCredentials: true,
@@ -221,7 +244,20 @@ export default function TLDR() {
       if (error.response) {
         switch (error.response.status) {
           case 400:
-            toast.error("⚠️ Missing text content or provider!", {
+            toast.error("⚠️ Missing text content or model!", {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              transition: Bounce,
+            });
+            break;
+          case 401:
+            toast.error("🚫 Unauthorized. Please log in.", {
               position: "top-right",
               autoClose: 3000,
               hideProgressBar: false,
@@ -378,15 +414,15 @@ export default function TLDR() {
           </div>
           <div className="config-container">
             <div className="config-item row-1">
-              <span>Provider: </span>
+              <span>Model: </span>
               <select
-                name="provider"
-                defaultValue="OpenAI GPT-4o mini"
-                onChange={(e) => setSelectedProvider(e.target.value)}
+                name="model"
+                defaultValue="gpt-4o-mini"
+                onChange={(e) => setSelectedModel(e.target.value)}
                 disabled={isLoading}
               >
-                <option value="OpenAI GPT-4o mini">OpenAI GPT-4o mini</option>
-                <option value="Cohere Command R">Cohere Command R</option>
+                <option value="gpt-4o-mini">GPT-4o mini</option>
+                <option value="gpt-4.1-nano">GPT-4.1 nano</option>
               </select>
             </div>
             <div className="row-2">

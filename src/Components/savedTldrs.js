@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import Markdown from "react-markdown";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import remarkGfm from "remark-gfm";
 import axios from "axios";
 
 export default function SavedTLDRs() {
+  const navigate = useNavigate();
+
   const [savedSummaries, setSavedSummaries] = useState([]);
   const [filteredSummaries, setFilteredSummaries] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -16,7 +18,6 @@ export default function SavedTLDRs() {
     const fetchSavedTLDRsPromise = axios
       .get(`${process.env.REACT_APP_API_URL}/fetch-saved-tldrs`, {
         headers: {
-          "x-api-key": process.env.REACT_APP_API_KEY,
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -24,6 +25,18 @@ export default function SavedTLDRs() {
       .then((response) => {
         setSavedSummaries(response.data.savedTLDRs);
         setFilteredSummaries(response.data.savedTLDRs);
+
+        toast.success("Saved TL;DRs fetched successfully!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Bounce,
+        });
       })
       .catch((error) => {
         toast.error("An error occurred. Please try again.", {
@@ -43,7 +56,6 @@ export default function SavedTLDRs() {
       fetchSavedTLDRsPromise,
       {
         pending: "Fetching Saved TL;DRs...",
-        success: "👌 TL;DRs fetched successfully!",
       },
       {
         position: "top-right",
@@ -84,7 +96,7 @@ export default function SavedTLDRs() {
     <div className="saved-tldrs-container">
       <div className="header-container">
         <div className="header-left-icon">
-          <Link to="/tldr">
+          <div onClick={() => navigate(-1)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="24px"
@@ -94,7 +106,7 @@ export default function SavedTLDRs() {
             >
               <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
             </svg>
-          </Link>
+          </div>
         </div>
         <h1>Saved TL;DRs</h1>
         <div className="header-right-icon">
