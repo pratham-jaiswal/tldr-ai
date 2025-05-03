@@ -4,7 +4,7 @@ const termsSections = [
   {
     title: "1. Use of Service",
     content:
-      "TL;DR AI provides AI-generated summaries of text and URLs. The service is intended for informational purposes only and should not be relied upon for legal, financial, or medical decisions.",
+      "TL;DR AI provides AI-generated summaries of text and URLs. A Google account is required to generate summaries. The service is intended for informational purposes only and should not be relied upon for legal, financial, or medical decisions.",
   },
   {
     title: "2. Rate Limits",
@@ -31,7 +31,8 @@ const termsSections = [
   {
     title: "5. Data Retention",
     content:
-      "Saved TL;DRs and URLs may be stored indefinitely unless requested for deletion by the user. We do not sell or share this data with third parties.",
+      "Saved TL;DRs, submitted URLs, and associated user data (such as name, email, and user ID) are stored securely in our database. This data may be retained indefinitely unless the user explicitly requests deletion. We do not sell or share this data with third parties. " +
+      "Please note that we use third-party services, such as Clerk (for authentication) and OpenAI (for AI models), which may have their own data retention policies. We do not control or accept liability for data retained by these external services.",
   },
   {
     title: "6. Changes to These Terms",
@@ -40,7 +41,24 @@ const termsSections = [
   },
   {
     title: "7. Contact Information",
-    content: "For inquiries, please contact us at [Insert Contact Email].",
+    content:
+      "For inquiries, feedback, or data-related requests, please contact us at:",
+    list: [
+      <a
+        href="mailto:contact@prathamjaiswal.com"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        contact@prathamjaiswal.com
+      </a>,
+      <a
+        href="mailto:prathamj0502@gmail.com"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        prathamj0502@gmail.com
+      </a>,
+    ],
   },
 ];
 
@@ -63,7 +81,7 @@ export default function TermsConditions() {
         </div>
         <div className="terms-header">
           <h1>Terms & Conditions</h1>
-          <p>Last Updated: [Insert Date]</p>
+          <p>Last Updated: 03rd May 2025</p>
         </div>
       </div>
 

@@ -11,14 +11,14 @@ export default function About() {
       title: "How It Works",
       content: "TL;DR AI offers two ways to generate summaries:",
       list: [
-        "From a URL: Paste a link and get a summary of its content.",
-        "From Text: Enter text manually to generate a concise summary.",
+        <><b>From a URL:</b> Paste a link and get a summary of its content.</>,
+        <><b>From Text:</b> Enter text manually to generate a concise summary.</>,
       ],
     },
     {
       title: "AI Model Options",
       content: "Users can choose between:",
-      list: ["OpenAI GPT-4o mini", "Cohere Command R"],
+      list: ["OpenAI GPT-4o mini", "OpenAI GPT-4.1 nano"],
     },
     {
       title: "Saved Summaries",
