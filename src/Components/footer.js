@@ -6,6 +6,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer-container">
         <nav className="footer-nav">
+          <Link to="/saved-tldrs">Saved TL;DRs</Link>
           <Link to="/privacy-policy">Privacy Policy</Link>
           <Link to="/terms-conditions">Terms & Conditions</Link>
           <Link to="/about">About</Link>
