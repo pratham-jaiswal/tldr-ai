@@ -40,4 +40,4 @@ Users can choose between:
 
 - [React](https://react.dev/)
 - [Clerk](https://clerk.com/)
-- [Sass](https://sass-lang.com/)
+- [Scss](https://sass-lang.com/)
