@@ -153,7 +153,7 @@ function App() {
         <SignedIn>
           <div className="patreon-menu-wrapper">
             <button className="patreon-menu-button">
-              {userDetails ? userDetails.patreonDetails.tier : "Free Tier"}
+              {userDetails & userDetails?.patreonDetails ? userDetails.patreonDetails.tier : "Free Tier"}
             </button>
             <div className="patreon-dropdown">
               <div>
