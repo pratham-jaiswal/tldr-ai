@@ -35,3 +35,9 @@ Users can choose between:
 **TL;DR:** Summarize content instantly with AI-powered summaries.
 
 [Backend Code](https://github.com/pratham-jaiswal/tldr-server)
+
+## Built with
+
+- [React](https://react.dev/)
+- [Clerk](https://clerk.com/)
+- [Sass](https://sass-lang.com/)
