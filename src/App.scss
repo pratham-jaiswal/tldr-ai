@@ -9,14 +9,15 @@
         font-family: Arial, sans-serif;
         font-weight: bold;
         border-radius: 100%;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         text-decoration: none;
         display: flex;
         align-items: center;
         z-index: 9999;
         transition: background-color 0.3s ease;
-    
-        :hover, :focus {
+
+        :hover,
+        :focus {
             background-color: #e03e47;
             outline: none;
         }
@@ -32,6 +33,64 @@
         display: flex;
         justify-content: flex-end;
         gap: 20px;
+
+        .patreon-menu-wrapper {
+            position: relative;
+            display: inline-block;
+
+            &:hover .patreon-dropdown {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+
+        .patreon-menu-button {
+            background-color: #f96854;
+            color: #FFFFFF;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+
+        .patreon-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: #F4EEE0;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            z-index: 1000;
+            min-width: 200px;
+
+            & button {
+                display: block;
+                width: 100%;
+                padding: 5px;
+                background: none;
+                border: none;
+                text-align: left;
+                text-decoration: none;
+                color: #393646;
+                text-align: center;
+                border-radius: 10px;
+                padding: 10px 0;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #393646;
+                    text-decoration: none;
+                    color: #F4EEE0;
+                }
+            }
+        }
 
         button {
             background-color: transparent;
@@ -733,55 +792,55 @@
 }
 
 .footer {
-  color: rgb(244, 238, 224);
-  padding: 1.5rem 0;
-  margin-top: 2.5rem;
-  
-  .footer-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-  }
+    color: rgb(244, 238, 224);
+    padding: 1.5rem 0;
+    margin-top: 2.5rem;
 
-  .footer-nav {
-    display: flex;
-    gap: 1.5rem;
-    
-    a {
-      color: rgb(244, 238, 224);
-      text-decoration: none;
-      transition: color 0.3s;
-      transition: all 0.3s ease-in-out;
-
-      &:hover {
-        transform: scale(1.05);
-      }
+    .footer-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
     }
-  }
 
-  .footer-social {
-    display: flex;
-    gap: 1rem;
+    .footer-nav {
+        display: flex;
+        gap: 1.5rem;
 
-    .social-link {
-      width: 24px;
-      height: 24px;
-      display: inline-block;
-      background-size: contain;
-      background-repeat: no-repeat;
+        a {
+            color: rgb(244, 238, 224);
+            text-decoration: none;
+            transition: color 0.3s;
+            transition: all 0.3s ease-in-out;
 
-      svg:hover {
-        transition: all 0.3s ease-in-out;
-        fill: rgba(244, 238, 224, 0.9);
-      }
+            &:hover {
+                transform: scale(1.05);
+            }
+        }
     }
-  }
 
-  .footer-text {
-    font-size: 0.875rem;
-    color: lighten(rgb(244, 238, 224), 20%);
-  }
+    .footer-social {
+        display: flex;
+        gap: 1rem;
+
+        .social-link {
+            width: 24px;
+            height: 24px;
+            display: inline-block;
+            background-size: contain;
+            background-repeat: no-repeat;
+
+            svg:hover {
+                transition: all 0.3s ease-in-out;
+                fill: rgba(244, 238, 224, 0.9);
+            }
+        }
+    }
+
+    .footer-text {
+        font-size: 0.875rem;
+        color: lighten(rgb(244, 238, 224), 20%);
+    }
 }
 
 *:disabled {
