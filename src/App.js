@@ -23,6 +23,7 @@ import {
   useAuth,
 } from "@clerk/clerk-react";
 import { useRef } from "react";
+import { PropagateLoader } from "react-spinners";
 
 function App() {
   const { isSignedIn, isLoaded } = useAuth();
@@ -31,7 +32,11 @@ function App() {
   const signOutButtonRef = useRef(null);
 
   if (!isLoaded) {
-    return <div>Loading...</div>;
+    return (
+      <div className="loader-container">
+        <PropagateLoader color="#F4EEE0" />
+      </div>
+    );
   }
 
   const handleSignIn = () => {
