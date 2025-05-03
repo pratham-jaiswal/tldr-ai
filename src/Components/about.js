@@ -11,8 +11,12 @@ export default function About() {
       title: "How It Works",
       content: "TL;DR AI offers two ways to generate summaries:",
       list: [
-        <><b>From a URL:</b> Paste a link and get a summary of its content.</>,
-        <><b>From Text:</b> Enter text manually to generate a concise summary.</>,
+        <>
+          <b>From a URL:</b> Paste a link and get a summary of its content.
+        </>,
+        <>
+          <b>From Text:</b> Enter text manually to generate a concise summary.
+        </>,
       ],
     },
     {
@@ -32,7 +36,30 @@ export default function About() {
       title: "Rate Limits",
       content: "",
       list: [
-        "Users are limited to 2 AI-generated TL;DRs per 6 hours.",
+        "Free users can generate 1 AI-generated TL;DR per 6 hours.",
+        <>
+          Patreon members unlock higher limits:
+          <ul>
+            <li>
+              <b>Supporter:</b> 3 per 6 hours
+            </li>{" "}
+            <li>
+              <b>Digital Insider:</b> 10 per 6 hours
+            </li>
+          </ul>
+        </>,
+        "Unlimited retrieval of previously saved summaries.",
+        <>
+          See our{" "}
+          <a
+            href="https://www.patreon.com/bePatron?u=109627851"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Patreon page
+          </a>{" "}
+          for details.
+        </>,
         "Fetching a previously saved summary does not count towards this limit.",
       ],
     },

@@ -10,8 +10,30 @@ const termsSections = [
     title: "2. Rate Limits",
     content: "To ensure fair usage, each user is limited to:",
     list: [
-      "2 AI-generated TL;DR requests per 6 hours.",
+      "1 AI-generated TL;DR request per 6 hours for free users.",
+      <>
+        Higher limits available for Patreon members:
+        <ul>
+          <li>
+            <b>Supporter:</b> 3 per 6 hours
+          </li>{" "}
+          <li>
+            <b>Digital Insider:</b> 10 per 6 hours
+          </li>
+        </ul>
+      </>,
       "Unlimited retrieval of previously saved summaries.",
+      <>
+        See our{" "}
+        <a
+          href="https://www.patreon.com/bePatron?u=109627851"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Patreon page
+        </a>{" "}
+        for details.
+      </>,
     ],
   },
   {
@@ -31,8 +53,11 @@ const termsSections = [
   {
     title: "5. Data Retention",
     content:
-      "Saved TL;DRs, submitted URLs, and associated user data (such as name, email, and user ID) are stored securely in our database. This data may be retained indefinitely unless the user explicitly requests deletion. We do not sell or share this data with third parties. " +
-      "Please note that we use third-party services, such as Clerk (for authentication) and OpenAI (for AI models), which may have their own data retention policies. We do not control or accept liability for data retained by these external services.",
+      "Saved TL;DRs, submitted URLs, and associated user data (such as name, email, and user ID) are stored securely in our database." + 
+      " If a user links their Patreon account, we also store their Patreon member ID and pledge tier to enable enhanced rate limits. " + 
+      " This data may be retained indefinitely unless the user explicitly requests deletion. We do not sell or share this data with third parties." +
+      " Please note that we use third-party services, such as Clerk (for authentication), OpenAI (for AI models), and Patreon (for supporter verification), which may have their own data retention policies." + 
+      " We do not control or accept liability for data retained by these external services.",
   },
   {
     title: "6. Changes to These Terms",
@@ -81,7 +106,7 @@ export default function TermsConditions() {
         </div>
         <div className="terms-header">
           <h1>Terms & Conditions</h1>
-          <p>Last Updated: 03rd May 2025</p>
+          <p>Last Updated: <i>04th May 2025</i></p>
         </div>
       </div>
 
