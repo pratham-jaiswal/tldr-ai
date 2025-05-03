@@ -22,14 +22,40 @@ import {
   SignUpButton,
   useAuth,
 } from "@clerk/clerk-react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PropagateLoader } from "react-spinners";
+import axios from "axios";
 
 function App() {
-  const { isSignedIn, isLoaded } = useAuth();
+  const { isSignedIn, isLoaded, getToken } = useAuth();
   const signInButtonRef = useRef(null);
   const signUpButtonRef = useRef(null);
   const signOutButtonRef = useRef(null);
+  const [userDetails, setUserDetails] = useState(null);
+
+  useEffect(() => {
+    if (!isLoaded || !isSignedIn) return;
+    const fetchUserData = async () => {
+      try {
+        const token = await getToken();
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/get-user`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        );
+        setUserDetails(response.data.userDetails);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, [isLoaded, isSignedIn]);
 
   if (!isLoaded) {
     return (
@@ -55,6 +81,35 @@ function App() {
     if (signOutButtonRef.current && isSignedIn) {
       signOutButtonRef.current.click();
     }
+  };
+
+  const handleConnectPatreon = () => {
+    window.location.assign(`${process.env.REACT_APP_API_URL}/auth/patreon`);
+  };
+
+  const handleDisconnectPatreon = async () => {
+    try {
+      const token = await getToken();
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/diconnect-patreon`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      if (response.status === 200) {
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  const handlePledge = () => {
+    window.open("https://www.patreon.com/bePatron?u=109627851", "_blank");
   };
 
   return (
@@ -96,6 +151,38 @@ function App() {
           <button onClick={handleSignUp}>Sign Up</button>
         </SignedOut>
         <SignedIn>
+          <div className="patreon-menu-wrapper">
+            <button className="patreon-menu-button">
+              {userDetails ? userDetails.patreonDetails.tier : "Free Tier"}
+            </button>
+            <div className="patreon-dropdown">
+              <div>
+                Tier: <i>{userDetails ? userDetails.patreonDetails.tier : "Free Tier"}</i>
+              </div>
+              <div>
+                Rate Limit:{" "}
+                <i>
+                  {userDetails
+                    ? userDetails.patreonDetails.rateLimit + " per 6 hrs"
+                    : "1 per 6 hrs"}
+                </i>
+              </div>
+              {userDetails ? (
+                <>
+                  <button onClick={handleDisconnectPatreon}>
+                    Disconnect Patreon
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button onClick={handlePledge}>Become a Patron</button>
+                  <button onClick={handleConnectPatreon}>
+                    Connect Patreon <br /> (Must Be a Patron)
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
           <button onClick={handleSignOut}>Sign Out</button>
         </SignedIn>
       </div>
