@@ -26,6 +26,27 @@
         }
 
     }
+
+    .nav-header {
+        padding: 15px 20px 0 0;
+        display: flex;
+        justify-content: flex-end;
+        gap: 20px;
+
+        button {
+            background-color: transparent;
+            border: none;
+            color: #fff;
+            font-family: "Handlee", serif;
+            font-size: 1rem;
+            text-decoration: none;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
 }
 
 .tldr-container {
@@ -392,7 +413,6 @@
         justify-content: center;
         position: relative;
         margin: 20px;
-        user-select: none;
 
         .header-left-icon {
             position: absolute;
@@ -409,10 +429,10 @@
         }
 
         .about-header {
+            width: 60%;
             text-align: center;
 
             h1 {
-                width: 60%;
                 font-size: 2.5rem;
                 font-family: "Handlee", serif;
                 letter-spacing: 3px;
@@ -646,10 +666,10 @@
 
         .policy-header,
         .terms-header {
+            width: 60%;
             text-align: center;
 
             h1 {
-                width: 60%;
                 font-size: 2.5rem;
                 font-family: "Handlee", serif;
                 letter-spacing: 3px;
@@ -757,7 +777,6 @@
     color: lighten(rgb(244, 238, 224), 20%);
   }
 }
-
 
 *:disabled {
     cursor: not-allowed;
