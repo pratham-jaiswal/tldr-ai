@@ -165,7 +165,6 @@ export default function TLDR() {
             });
         }
       } else if (error.request) {
-        console.error(error);
         toast.error("🚫 Network error. Please check your connection.", {
           position: "top-right",
           autoClose: 3000,
