@@ -791,6 +791,43 @@
     }
 }
 
+.maintenance-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #393646;
+    padding: 1rem;
+
+    .maintenance-card {
+        background: #F4EEE0;
+        border-radius: 1.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 2.5rem;
+        max-width: 500px;
+        width: 100%;
+        text-align: center;
+    
+        .maintenance-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        
+            .maintenance-title {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+                color: #393646;
+            }
+            
+            .maintenance-message {
+                font-size: 1rem;
+                color: #393646;
+                line-height: 1.5;
+            }
+        }
+    }
+}
+
 .footer {
     color: rgb(244, 238, 224);
     padding: 1.5rem 0;
