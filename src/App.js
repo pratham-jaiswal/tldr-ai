@@ -13,7 +13,6 @@ import PrivacyPolicy from "./privacyPolicy";
 import TermsConditions from "./termsConditions";
 import Footer from "./Components/footer";
 import ScrollToTop from "./Components/scrollToTop";
-import UnderMaintenance from "./Components/underMaintenance";
 import {
   Protect,
   SignedIn,
@@ -57,12 +56,6 @@ function App() {
 
     fetchUserData();
   }, [isLoaded, isSignedIn]);
-
-  console.log(process.env.REACT_APP_MAINTENANCE_MODE);
-  const isUnderMaintenance = process.env.REACT_APP_MAINTENANCE_MODE === "true";
-  if (isUnderMaintenance) {
-    return <UnderMaintenance />;
-  }
 
   if (!isLoaded) {
     return (
